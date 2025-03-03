@@ -8,3 +8,9 @@ export function cn(...inputs: ClassValue[]) {
 export function toPlainObject<T>(value: T): T{
   return JSON.parse(JSON.stringify(value))
 }
+//formate nubmer with decimal places
+
+export function formatNumberWithDecimalPlaces(number: number): string{
+  const [int, decimal] = number.toString().split('.');
+  return decimal ? `${int}.${decimal.slice(0, 2)}` : `${int}.00`;
+}

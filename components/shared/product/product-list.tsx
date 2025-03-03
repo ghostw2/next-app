@@ -1,7 +1,7 @@
 import React from 'react'
 import ProductCard from './prouct-card';
-
-const ProductList = ({ data, title,limit }: { data: any; title?: string;limit?:number }) => {
+import { Product } from '@/types';
+const ProductList = ({ data, title,limit }: { data: Product[]; title?: string;limit?:number }) => {
     const toRenderData = limit ? data.slice(0, limit) : data;
     return (
     <div className='my-10'>
@@ -10,7 +10,7 @@ const ProductList = ({ data, title,limit }: { data: any; title?: string;limit?:n
           </h2>
           {data.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {toRenderData.map((product: any) => (
+                  {toRenderData.map((product: Product) => (
                       <ProductCard key={product.slug} product={product}/>
                   ))}
           </div>

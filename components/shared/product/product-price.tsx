@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import { cn } from '@/lib/utils'; 
 const ProductPrice = ({ value, className }: { value: string; className?: string }) => {

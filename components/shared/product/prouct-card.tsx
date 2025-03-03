@@ -3,27 +3,33 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import ProductPrice from './product-price'
+import { Product } from '@/types'
 
-const ProductCard = ({ product }:{product:any}) => {
+const ProductCard = ({ product }: { product: Product }) => {
+  if (!product) return null;
+  const productImage = product.images && product.images.length > 0 
+  ? product.images[0] 
+  : '/placeholder.jpg';
   return (
-    <Card className='w-full max-w-sm'>
+    <Card className='w-full max-w-sm' suppressHydrationWarning>
       <CardHeader className='p-0 items-center'>
         <Link
           href={`/product/${product.slug}`}
-        ></Link>
+        >
         <Image
-          src={product.images[0]}
+          src={productImage}
           alt={product.name}
           height={300}
           width={300}
-          priority={true}></Image>
+            priority={true}></Image>
+          </Link>
       </CardHeader>
       <CardContent className='p-4 grid gap-4'>
         <div className='text-xs'>
          {product.brand}
         </div>
         <Link href={`/product/${product.slug}`}>
-          <h2 className='text-sm font-medium'>
+          <h2 className='text-sm font-medium' >
             {product.name}
           </h2>
         </Link>
