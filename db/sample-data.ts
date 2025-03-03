@@ -1,4 +1,7 @@
-const sampleData = {
+//import { Prisma } from "@prisma/client";
+
+
+const sampleData= {
   products: [
     {
       name: 'Polo Sporting Stretch Shirt',
