@@ -27,10 +27,10 @@ const ProductDetailsPage = async (props: { params: Promise<{ slug: string }> }) 
                             {product.name}
                         </h1>
                         <p>
-                            {product.rating} of {product.numReviews} Reviews
+                            {product.rating.toString()} of {product.numReviews} Reviews
                         </p>
                         <div className="flex flex-col sm:flex-row sm:flex:items-center gap-3 ">
-                            <ProductPrice value={product.price} className='bg-green-200 text-green-400 rounded-full w-24 px-5 py-2' />
+                            <ProductPrice value={product.price.toString()} className='bg-green-200 text-green-400 rounded-full w-24 px-5 py-2' />
                         </div>
                         <div className="mt-10">
                             <div className="font-semibold">
@@ -46,7 +46,7 @@ const ProductDetailsPage = async (props: { params: Promise<{ slug: string }> }) 
                             <div className="flex justify-between mb-2">
                                 <div>Price:</div>
                                 <div>
-                                    <ProductPrice value={product.price} />
+                                    <ProductPrice value={product.price.toString()} />
                                 </div>
                             </div>
                             <div className="flex justify-between mb-2">
