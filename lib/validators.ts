@@ -1,12 +1,17 @@
 import { z } from 'zod';
 import { formatNumberWithDecimalPlaces } from './utils';
+import { Decimal } from '@prisma/client/runtime/library';
 
-const currency =  z.string()
-.refine(
-    (value) => 
-                /^\d+(\.\d{2})?$/.test(formatNumberWithDecimalPlaces(Number(value)))
-, "Price must be a valid number with 2 decimal places")
-//Product 
+const currency =  z.custom<Decimal>((value) => {
+    // Check if the value is a Decimal instance
+    if (value instanceof Decimal) {
+      // Convert Decimal to number and validate
+      const numberValue = value.toNumber();
+      return /^\d+(\.\d{2})?$/.test(formatNumberWithDecimalPlaces(numberValue));
+    }
+    // If the value is not a Decimal, reject
+    return false;
+  }, "Price must be a valid number with 2 decimal places");
 //schema for inserting
 export const InsertProductSchema = z.object({
     name: z.string().min(3, "Name should be atleast 3 characters long").max(255, "Name should be atmost 255 characters long"),

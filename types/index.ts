@@ -1,8 +1,20 @@
-import { z } from 'zod';
-import { InsertProductSchema } from '@/lib/validators';
-export type Product =z.infer<typeof InsertProductSchema> & {
+// import { z } from 'zod';
+// import { InsertProductSchema } from '@/lib/validators';
+ import { Decimal } from '@prisma/client/runtime/library';
+ export type Product = {
     id: string;
-    rating: number;
+    name: string;
+    slug: string;
+    category: string;
+    brand: string;
+    description: string;
+    stock: number;
+    images: string[];
+    isFeatured: boolean;
+    banner: string | null;
+    price: Decimal;
+    rating: Decimal;
+    numReviews: number;
     createdAt: Date;
     updatedAt: Date;
-}
+  };
