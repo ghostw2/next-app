@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import Image from 'next/image'
+import SignInForm from './sign-in-form'
 
 export const metadata: Metadata = {
     title: "Sign In"
@@ -24,7 +25,7 @@ const SignInPage = () => {
                   </CardDescription>
               </CardHeader>
               <CardContent>
-                  {/*form content here */}
+                  <SignInForm/>
               </CardContent>
           </Card>
      
