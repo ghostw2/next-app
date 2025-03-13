@@ -6,8 +6,8 @@ import { compareSync } from 'bcrypt-ts-edge';
 import type { NextAuthConfig } from 'next-auth';
 export const config = {
     pages: {
-        signIn: '/sing-in',
-        error: '/sing-in',
+        signIn: '/sign-in',
+        error: '/sign-in',
         
     },
     session: {
@@ -15,14 +15,15 @@ export const config = {
         maxAge: 30 * 24 * 60 * 60,
     },
     adapter: PrismaAdapter(prisma),
+    secret:process.env.AUTH_TOKEN_SECRET,
     providers: [
         CredentialsProvider(
             {   name:"Credentials",
                 credentials: {
                     email: { type: 'email' },
                     password: { type: 'password' }
-           
                 },
+
                 async authorize(credentials) {
                     if (credentials === null) return null;
                     //find user in db 
@@ -60,4 +61,4 @@ export const config = {
     }
 } satisfies NextAuthConfig;
 
-export const { handlers, auth, signIn, signOut } = NextAuth(config);
+export const { handlers,   auth, signIn, signOut } = NextAuth(config);

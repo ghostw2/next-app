@@ -1,15 +1,23 @@
+
 import React from 'react'
-import {signInWithCredentials} from '@/lib/actions/user.actions'
 import { Metadata } from 'next'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import Image from 'next/image'
 import SignInForm from './sign-in-form'
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation'
+
 
 export const metadata: Metadata = {
     title: "Sign In"
 }
-const SignInPage = () => {
+const SignInPage = async() => {
+    const session = await auth()
+    if (session) {
+        console.log('redirecting');
+       return redirect('/')
+    }
   return (
       <div className='w-full max-w-md mx-auto'>
           <Card>
