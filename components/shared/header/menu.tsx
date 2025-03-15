@@ -1,10 +1,11 @@
+"use server"
 import React from 'react'
 import ModeToggle from './mode-toggle'
 import { Button } from '@/components/ui/button'
-import {  EllipsisVertical, ShoppingCart, UserIcon } from 'lucide-react'
+import {  EllipsisVertical, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-
+import UserButton from './user-button'
 const Menu = () => {
   return (
     <div className='flex justify-end gap-3'>
@@ -15,11 +16,7 @@ const Menu = () => {
                 <ShoppingCart />Card
             </Link>
         </Button>
-        <Button asChild > 
-            <Link href='/sign-in'>
-                <UserIcon />Sign-in
-            </Link>
-        </Button>
+              <UserButton />
           </nav>
           <nav className="md:hidden">
               <Sheet>
@@ -37,11 +34,7 @@ const Menu = () => {
                                   <ShoppingCart/> Card
                               </Link>
                           </Button>
-                          <Button >
-                              <Link href="sign-in">
-                                  <UserIcon/>
-                              </Link>
-                          </Button>
+                          <UserButton />
                       </SheetDescription>
                   </SheetContent>
               </Sheet>

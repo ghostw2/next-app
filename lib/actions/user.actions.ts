@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import { signInFormSchema } from '@/lib/validators';
 import { signIn, signOut } from "@/auth";
@@ -24,6 +24,7 @@ export const signInWithCredentials = async (prevstate: unknown, formdata: FormDa
     }
 }
 //sign user out 
-export  async  function signOutUser() {
+export async function signOutUser() {
+    console.log('sign-out')
     await signOut();
 } 
