@@ -1,6 +1,8 @@
 // import { z } from 'zod';
 // import { InsertProductSchema } from '@/lib/validators';
- import { Decimal } from '@prisma/client/runtime/library';
+import { Decimal } from '@prisma/client/runtime/library';
+ import { cardItemSchema,insertCardSchema } from '@/lib/validators';
+import { z } from 'zod';
  export type Product = {
     id: string;
     name: string;
@@ -17,4 +19,6 @@
     numReviews: number;
     createdAt: Date;
     updatedAt: Date;
-  };
+ };
+export type card = z.infer<typeof insertCardSchema>
+export type cardItem = z.infer<typeof cardItemSchema>
