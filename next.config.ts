@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
   },
   
   // If you're using swc compiler
-  swcMinify: true,
+ // swcMinify: true,
 };
 
 export default nextConfig;

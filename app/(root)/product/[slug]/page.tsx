@@ -1,11 +1,11 @@
 import React from 'react'
 import { getProductBySlug } from '@/lib/actions/product.actions';
 import { notFound } from 'next/navigation';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import ProductPrice from '@/components/shared/product/product-price';
 import ProductImages from '@/components/shared/product/product-images';
+import AddToCard from '@/components/shared/product/add-to-card';
 const ProductDetailsPage = async (props: { params: Promise<{ slug: string }> }) => {
     const { slug } = await props.params;
     const product = await getProductBySlug(slug)
@@ -60,7 +60,14 @@ const ProductDetailsPage = async (props: { params: Promise<{ slug: string }> }) 
                             </div>
                             {product.stock > 0 && (
                                 <div className="flex-center">
-                                    <Button className='w-full'>Add to Cart</Button>
+                                    <AddToCard item={{
+                                        productId: product.id,
+                                        name: product.name,
+                                        slug: product.slug,
+                                        qty: 1,
+                                        price: product.price,
+                                        image:product.images[0]
+                                    }}/>
                                 </div>
                             )}
                         </CardContent>
