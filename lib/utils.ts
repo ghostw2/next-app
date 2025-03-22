@@ -29,3 +29,14 @@ export function formatError(error: any) {
   }
   
 }
+//round number to two decimal places
+export function round_to_2_decimal(value: number | string) {
+  if (typeof value === 'number') {
+    return Math.round((value + Number.EPSILON) / 100) * 100;
+  } else if (typeof value === 'string') {
+    return Math.round((Number(value) + Number.EPSILON) / 100) * 100;
+  }
+  else {
+    throw new Error('The value provided is neither a number or a string')
+  }
+}
