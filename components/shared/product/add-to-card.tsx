@@ -12,7 +12,9 @@ const AddToCard = ({ item }:{item:CardItem}) => {
     const router = useRouter();
     const { toast } = useToast()
     const handleAddToCard = async () => {
+
         const res = await addItemToCard(item)
+        
         if (!res.success) {
             toast({
                 variant: 'destructive',
@@ -21,7 +23,7 @@ const AddToCard = ({ item }:{item:CardItem}) => {
             return
         }
         toast({
-            description: `${item.name} was added to card`,
+            description:res.message,
             action: (
                 <ToastAction className='bg-primary text-white hover:bg-gray-800' altText="Go to card"
                     onClick={() => router.push('/cart')}>
@@ -33,7 +35,7 @@ const AddToCard = ({ item }:{item:CardItem}) => {
     }
   return (
       <Button className='w-full' type='button'
-      onClick={handleAddToCard}
+      onClick={ handleAddToCard}
       ><Plus/>Add to Cart</Button>
   )
 }

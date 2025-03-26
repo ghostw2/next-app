@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Card" ALTER COLUMN "userId" DROP NOT NULL;

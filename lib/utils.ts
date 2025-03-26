@@ -1,3 +1,4 @@
+
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -10,10 +11,14 @@ export function toPlainObject<T>(value: T): T{
 }
 //formate nubmer with decimal places
 
-export function formatNumberWithDecimalPlaces(number: number): string{
-  const [int, decimal] = number.toString().split('.');
-  return decimal ? `${int}.${decimal.slice(0, 2)}` : `${int}.00`;
+export function formatNumberWithDecimalPlaces(number: number): string {
+  const rounded = Math.round(number * 100) / 100;
+  return rounded.toLocaleString('en-US', { 
+    minimumFractionDigits: 2, 
+    maximumFractionDigits: 2 
+  });
 }
+
 //format errors function
 //eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatError(error: any) {
@@ -32,9 +37,9 @@ export function formatError(error: any) {
 //round number to two decimal places
 export function round_to_2_decimal(value: number | string) {
   if (typeof value === 'number') {
-    return Math.round((value + Number.EPSILON) / 100) * 100;
+    return Math.round((value + Number.EPSILON)* 100)/100 ;
   } else if (typeof value === 'string') {
-    return Math.round((Number(value) + Number.EPSILON) / 100) * 100;
+    return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
   }
   else {
     throw new Error('The value provided is neither a number or a string')

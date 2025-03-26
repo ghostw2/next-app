@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import ProductPrice from '@/components/shared/product/product-price';
 import ProductImages from '@/components/shared/product/product-images';
 import AddToCard from '@/components/shared/product/add-to-card';
+
 const ProductDetailsPage = async (props: { params: Promise<{ slug: string }> }) => {
     const { slug } = await props.params;
     const product = await getProductBySlug(slug)
@@ -65,7 +66,7 @@ const ProductDetailsPage = async (props: { params: Promise<{ slug: string }> }) 
                                         name: product.name,
                                         slug: product.slug,
                                         qty: 1,
-                                        price: product.price,
+                                        price:Number(product.price) ,
                                         image:product.images[0]
                                     }}/>
                                 </div>

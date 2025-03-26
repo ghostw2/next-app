@@ -50,15 +50,15 @@ export const cardItemSchema = z.object({
   slug: z.string().min(1, "Slug is required"),
   qty: z.number().int().nonnegative("Quantity must be a positive number"),
   image: z.string().min(1, "Image is required"),
-  price: currency
+  price: z.number().min(0)
 })
 
 export const insertCardSchema = z.object({
   items: z.array(cardItemSchema),
-  itemsPrice: currency,
-  totalPrice: currency,
-  shippingPrice: currency,
-  taxPrice: currency,
+  itemsPrice: z.number().min(0),
+  totalPrice: z.number().min(0),
+  shippingPrice: z.number().min(0),
+  taxPrice: z.number().min(0),
   sessionCardId: z.string().min(1, "Session card id is required"),
   userId:z.string().optional().nullable()
 })
