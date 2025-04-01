@@ -36,6 +36,46 @@ export const calcPrice = async (items: CardItem[]) => {
     )
     
 }
+export const removeItemFromCard = async (productId: string) => { 
+    try {
+        const sessionCardId = (await cookies()).get('sessionCardId')?.value;
+        if (!sessionCardId) throw new Error("Session  is not defined")
+            const product = await prisma.product.findFirst({
+                where: {
+                    id: productId
+                }
+            })
+            
+        if (!product) throw new Error("Product does not exists")
+        const card = await getMyCart();
+        if (!card) throw new Error("Card does not exists");
+        //check if item exists inside the card
+        const exists = (card.items as CardItem[]).find((item) =>  item.productId === product.id )
+        if (!exists) throw new Error("Item does not exists in the card");
+        if (exists.qty === 1) {
+            card.items = (card.items as CardItem[]).filter((item) => item.productId !== product.id )
+        } else {
+            exists.qty = exists.qty - 1;
+        }
+        const prices = await calcPrice(card.items)
+            
+            await prisma.card.update({
+                where: {
+                    id:card.id
+                },
+                data: {
+                    items: card.items as Prisma.CardUpdateitemsInput,
+                    ...prices
+                }
+            })
+        revalidatePath(`/product/${product.slug}`);
+        return {success:true,message:`${product.name} was removed from the shopping card`}
+
+    } catch (error) {
+        return { success:false,message:formatError(error)}
+    }
+
+}
 export const addItemToCard = async (data: CardItem) => {
     try {
         //get sessionCardId
@@ -45,7 +85,7 @@ export const addItemToCard = async (data: CardItem) => {
         const session = await auth();
         const userId = session?.user?.id ? (session.user.id as string) : undefined;
         // get card
-        let card = await getMyCart();
+        const  card = await getMyCart();
         //console.log(typeof data.price, data.price)
         // 
 
