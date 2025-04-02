@@ -1,10 +1,12 @@
 import React from 'react'
-
-const Card = () => {
+import CardTable from './card-table'
+import { getMyCart } from '@/lib/actions/card.actions'
+const Card = async () => {
+  const card = await getMyCart()
   return (
-    <div>
-      
-    </div>
+    <>
+      <CardTable card={card}/>
+    </>
   )
 }
 

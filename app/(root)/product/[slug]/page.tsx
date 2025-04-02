@@ -11,7 +11,7 @@ import { getMyCart } from '@/lib/actions/card.actions';
 const ProductDetailsPage = async (props: { params: Promise<{ slug: string }> }) => {
     const { slug } = await props.params;
     const product = await getProductBySlug(slug)
-    const card = await getMyCard();
+    const card = await getMyCart();
     if (!product) {
         notFound()
     }

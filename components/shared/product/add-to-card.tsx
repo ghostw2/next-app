@@ -54,7 +54,8 @@ const AddToCard = ({ item,card }:{item:CardItem,card?:Card}) => {
             }
         })
      }
-    const alreadyInCard = card?.items.find((x)=> x.productId === item.productId)
+    const alreadyInCard = card?.items.find((x) => x.productId === item.productId)
+    console.log(alreadyInCard)
     return alreadyInCard ? (
         <div>
             <Button variant="outline" onClick={handleRemoveFromCard}>
