@@ -1,14 +1,12 @@
 'use server'   
-// import { prisma } from '@/prisma/prisma-client';
-    // import { toPlainObject } from '../utils'
-import { CardItem } from '@/types';
+
 import { cookies } from 'next/headers';
 import { formatError, round_to_2_decimal, toPlainObject } from '../utils';
 import { auth } from '@/auth';
 import { prisma } from '@/db/prisma';
 import { cardItemSchema, insertCardSchema } from '../validators';
 import { revalidatePath } from 'next/cache';
-import { Prisma } from '@prisma/client';
+import { CardItem } from '@/types';
 
 
 
@@ -64,7 +62,7 @@ export const removeItemFromCard = async (productId: string) => {
                     id:card.id
                 },
                 data: {
-                    items: card.items as Prisma.CardUpdateitemsInput,
+                    items: { set: card.items  },
                     ...prices
                 }
             })
@@ -120,7 +118,6 @@ export const addItemToCard = async (data: CardItem) => {
             
             await prisma.card.create({ data: newCard })
             message = `${product.name} was added to the shopping cart`
-            revalidatePath(`/product/${product.slug}`);
         } else {
             const already_in = (card.items as CardItem[]).find((item) => item.productId === product.id )
             if (already_in) {
@@ -142,13 +139,12 @@ export const addItemToCard = async (data: CardItem) => {
                     id:card.id
                 },
                 data: {
-                    items: card.items as Prisma.CardUpdateitemsInput,
+                    items: {set :card.items} ,
                     ...prices
                 }
             })
         }
-        
-
+        revalidatePath(`/product/${product.slug}`);
         return {
             success: true,
             message: message
@@ -177,10 +173,10 @@ export const getMyCart = async() => {
         return toPlainObject({
             ...card,
             items: card.items as CardItem[],
-            itemsPrice: card.itemsPrice,
-            totalPrice: card.totalPrice,
-            shippingPrice: card.shippingPrice,
-            taxPrice: card.taxPrice,
+            itemsPrice: card.itemsPrice.toNumber(),
+            totalPrice: card.totalPrice.toNumber(),
+            shippingPrice: card.shippingPrice.toNumber(),
+            taxPrice: card.taxPrice.toNumber(),
 
-        })
+        }) 
  }

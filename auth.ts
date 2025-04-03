@@ -54,8 +54,8 @@ export const config = {
             //set up the user id form the token 
             if (token?.sub) {
                 session.user.id = token.sub;
-                session.user.role = token.role
-                session.user.name = token.name
+                session.user.role = token.role as string;
+                session.user.name = token.name as string;
             }
             if (trigger == 'update') {
                 session.user.name = user.name;

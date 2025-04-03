@@ -45,3 +45,21 @@ export function round_to_2_decimal(value: number | string) {
     throw new Error('The value provided is neither a number or a string')
   }
 }
+export const CURRENCY_FORMATTER = new Intl.NumberFormat('en-Us', {
+  currency: 'USD',
+  style: 'currency',
+  minimumFractionDigits: 2,
+  maximumFractionDigits:2
+})
+
+export function formatCurrency(value: number | string | null) {
+  if (value === null) return ''
+  if (typeof value === 'number') {
+    return CURRENCY_FORMATTER.format(value)
+  }
+  if (typeof value === 'string') {
+    const numValue = parseFloat(value)
+    if (isNaN(numValue)) return ''
+    return CURRENCY_FORMATTER.format(numValue)
+  }
+}

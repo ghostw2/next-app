@@ -13,7 +13,7 @@ const AddToCard = ({ item,card }:{item:CardItem,card?:Card}) => {
     const router = useRouter();
     const { toast } = useToast()
     const [isPending, startTransition] = useTransition()
-    const handleAddToCard = async () => {
+    const handleAddToCard = () => {
         startTransition(async () => { 
             const res = await addItemToCard(item)
             if (!res.success) {
@@ -55,13 +55,13 @@ const AddToCard = ({ item,card }:{item:CardItem,card?:Card}) => {
         })
      }
     const alreadyInCard = card?.items.find((x) => x.productId === item.productId)
-    console.log(alreadyInCard)
+    
     return alreadyInCard ? (
-        <div>
+        <div className='flex items-center justify-center gap-2'>
             <Button variant="outline" onClick={handleRemoveFromCard}>
                 { (isPending) ? (<Loader className='h-4 w=4 animate-spin'/>) : (<Minus className='h-4 w-4'/>) }
             </Button>
-            <span className="mx-2">{ (isPending) ? (<Loader className='h-4 w=4 animate-spin'/>) : (alreadyInCard.qty)}</span>
+            <span className="mx-2">{ (isPending) ? (<Loader className='h-4 w=4 animate-spin'/>) : (alreadyInCard?.qty)}</span>
             <Button variant={"outline"} onClick={handleAddToCard}>
                 {(isPending) ? (<Loader className='h-4 w=4 animate-spin' />) : (<Plus className='h-4 w-4' />)}
             </Button>
