@@ -1,5 +1,6 @@
 import Footer from "@/components/footer";
 import Header from "@/components/shared/header";
+import { Toaster } from "@/components/ui/toaster";
 export const metadata = {
   title: "home"
   
@@ -16,6 +17,7 @@ export default function RootLayout({
       <div className="flex-1 wrapper">
         {children}
       </div>
+      <Toaster/>
       <Footer></Footer>
     </div>
   );

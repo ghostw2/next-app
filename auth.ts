@@ -4,6 +4,8 @@ import { prisma } from '@/db/prisma'
 import CredentialsProvider  from 'next-auth/providers/credentials'
 import { compareSync } from 'bcrypt-ts-edge';
 import type { NextAuthConfig } from 'next-auth';
+import { cookies, headers } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 export const config = {
     pages: {
@@ -52,8 +54,8 @@ export const config = {
             //set up the user id form the token 
             if (token?.sub) {
                 session.user.id = token.sub;
-                session.user.role = token.role
-                session.user.name = token.name
+                session.user.role = token.role as string;
+                session.user.name = token.name as string;
             }
             if (trigger == 'update') {
                 session.user.name = user.name;
@@ -74,6 +76,21 @@ export const config = {
                 )
             }
             return token
+        },
+        authorized({ request, auth }: any) {
+            if (!request.cookies.get('sessionCardId')) {
+                const sessionCardId = crypto.randomUUID();
+                const newRequestHeaders = new Headers(request.headers);
+                const response = NextResponse.next({
+                    request: {
+                        headers: newRequestHeaders
+                    }
+                })
+                response.cookies.set('sessionCardId',sessionCardId)
+                return response;
+            } else {
+                return true;
+            }
         }
     }
 } satisfies NextAuthConfig;

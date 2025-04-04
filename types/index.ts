@@ -20,5 +20,5 @@ import { z } from 'zod';
     createdAt: Date;
     updatedAt: Date;
  };
-export type card = z.infer<typeof insertCardSchema>
-export type cardItem = z.infer<typeof cardItemSchema>
+export type Card = z.infer<typeof insertCardSchema>
+export type CardItem = z.infer<typeof cardItemSchema>
