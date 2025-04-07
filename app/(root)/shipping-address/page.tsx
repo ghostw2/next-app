@@ -1,9 +1,9 @@
 import React from 'react'
 import { auth } from '@/auth'
-import { getMyCart } from '@/lib/actions/card.actions';
+//import { getMyCart } from '@/lib/actions/card.actions';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { getUserById, UpdateUserShippingAddress } from '@/lib/actions/user.actions';
+import { getUserById } from '@/lib/actions/user.actions';
 import ShippingCardForm from './shipping-address-form';
 import { ShippingAddress } from '@/types';
 import CheckoutSteps from '@/components/checkout-steps';

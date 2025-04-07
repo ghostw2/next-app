@@ -98,6 +98,19 @@ export const config = {
       return token;
     },
     authorized({ request, auth }: any) {
+      //Array of regex  patterns  of paths we want to protect
+      const protectedPaths = [
+        /\/shipping-address/,
+        /\/payment-method/,
+        /\/place-roder/,
+        /\/profile/,
+        /\/user\/(.*)/,
+        /\/order\/(.*)/,
+        /\/admin/,
+      ];
+      const { pathname } = request.nextUrl;
+      //check if not autheticated user is trying to  access protected path
+      if (!auth && protectedPaths.some((p) => p.test(pathname))) return false;
       if (!request.cookies.get("sessionCardId")) {
         const sessionCardId = crypto.randomUUID();
         const newRequestHeaders = new Headers(request.headers);

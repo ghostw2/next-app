@@ -8,7 +8,11 @@ import { PrismaClient } from "@prisma/client";
 import { prisma } from "@/prisma/prisma-client";
 import { formatError } from "../utils";
 import { ShippingAddress } from "@/types";
-import { ShippingAddressSchema } from "../client-safe-validators";
+import {
+  paymentMethodSchema,
+  ShippingAddressSchema,
+} from "../client-safe-validators";
+import { z } from "zod";
 
 export const signInWithCredentials = async (
   prevstate: unknown,
@@ -106,4 +110,41 @@ export async function UpdateUserShippingAddress(data: ShippingAddress) {
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
+}
+//update user payment method
+export async function UpdateUserPaymentMethod(
+  data: z.infer<typeof paymentMethodSchema>
+) {
+  try {
+    const session = await auth();
+    const userId = session?.user?.id;
+    if (!userId) throw new Error("User id could be found");
+    const user = await prisma.user.findFirst({
+      where: { id: userId },
+    });
+    if (!user) throw new Error("User could not be found");
+    const parsed = paymentMethodSchema.parse(data);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        paymentMethod: parsed.type,
+      },
+    });
+    return {
+      success: true,
+      message: "Successfully update user Payment Method",
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+export async function GetUserPaymentMethod() {
+  const session = await auth();
+  const userId = session?.user?.id;
+  if (!userId) return null;
+  const user = await prisma.user.findFirst({
+    where: { id: userId },
+  });
+  if (!user) return null;
+  return user.paymentMethod;
 }

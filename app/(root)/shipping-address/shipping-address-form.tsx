@@ -42,7 +42,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
     }
     return (
         <>
-            <div className='space-y-4  mx-auto max-w-lg'>
+            <div className='space-y-4  mx-auto w-1/2'>
                 <h1 className='h2-bold mt-4'>Shippping Address</h1>
                 <p className="text-sm text-muted-foreground">
                     Please enter your shipping address below. This will be used for shipping your order.
