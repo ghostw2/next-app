@@ -1,7 +1,8 @@
 // import { z } from 'zod';
 // import { InsertProductSchema } from '@/lib/validators';
 import { Decimal } from '@prisma/client/runtime/library';
- import { cardItemSchema,insertCardSchema } from '@/lib/validators';
+import { cardItemSchema, insertCardSchema, } from '@/lib/validators';
+import { ShippingAddressSchema } from '@/lib/client-safe-validators';
 import { z } from 'zod';
  export type Product = {
     id: string;
@@ -22,3 +23,4 @@ import { z } from 'zod';
  };
 export type Card = z.infer<typeof insertCardSchema>
 export type CardItem = z.infer<typeof cardItemSchema>
+export type ShippingAddress = z.infer<typeof ShippingAddressSchema>
